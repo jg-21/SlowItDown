@@ -1,27 +1,33 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Mindful Defaults Settings</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        padding: 20px;
-      }
-      input {
-        width: 100%;
-        padding: 8px;
-      }
-    </style>
+    <meta charset="UTF-8" />
+    <title>Mindful Defaults – Settings</title>
+    <link rel="stylesheet" href="options.css" />
   </head>
-  <h2>Nudge delay (in minutes)</h2>
-  <input id="nudgeDelay" type="number" min="1" value="10" />
-  <p id="delayStatus"></p>
   <body>
-    <h2>Set your redirection page</h2>
-    <input id="redirectUrl" type="text" placeholder="https://asoftmurmur.com" />
+    <h1>Mindful Defaults Settings</h1>
+
+    <div class="section">
+      <label for="redirectUrl">🔄 Break Redirect URL</label>
+      <input
+        id="redirectUrl"
+        type="text"
+        placeholder="e.g. https://asoftmurmur.com"
+      />
+      <div class="note">
+        Where to go when you choose “Never Mind” or “Take a Break”.
+      </div>
+    </div>
+
+    <div class="section">
+      <label for="nudgeDelay">⏱ Reminder Delay (minutes)</label>
+      <input id="nudgeDelay" type="number" min="1" placeholder="e.g. 10" />
+      <div class="note">How long before we remind you to take a break.</div>
+    </div>
+
     <p id="status"></p>
 
     <script src="options.js"></script>
-    <!-- ✅ External script, allowed -->
   </body>
 </html>
