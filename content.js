@@ -26,9 +26,6 @@
     buttons.forEach(({ id, text, tooltip, onClick }) => {
       const btn = document.createElement("button");
       btn.id = id;
-      btn.style.margin = "10px";
-      btn.style.padding = "10px 20px";
-      btn.style.fontSize = "1rem";
       btn.textContent = text;
       if (tooltip) btn.title = tooltip; // Add tooltip here
       btn.onclick = () => onClick(overlay);
@@ -43,22 +40,21 @@
 
   // Initial mindful prompt
   const initialOverlay = createOverlay(
-    "Are you here with intention or out of habit?",
+    "Hey there 👋<br>Are you here with intention or just out of habit?",
     [
       {
         id: "continueBtn",
-        text: "Continue",
-        tooltip: "Keep watching this page and start the mindfulness timer",
+        text: "Yes, Continue",
+        tooltip: "Stay on this page and start the mindful timer",
         onClick: (overlay) => {
           overlay.remove();
-          // Start timer after user continues
           chrome.runtime.sendMessage({ type: "startTimer" });
         },
       },
       {
         id: "closeTabBtn",
-        text: "Never Mind",
-        tooltip: "Leave this page and go back to working",
+        text: "No, Take Me Back",
+        tooltip: "Redirect to your calming site instead",
         onClick: () => {
           chrome.storage.sync.get(["redirectUrl"], (data) => {
             const url = data.redirectUrl || "https://asoftmurmur.com/";
@@ -68,8 +64,8 @@
       },
       {
         id: "settingsBtn",
-        text: "Settings",
-        tooltip: "Customize redirect page and reminder timer",
+        text: "Adjust Settings",
+        tooltip: "Change timer delay or redirect destination",
         onClick: () => {
           chrome.runtime.sendMessage({ type: "openSettings" });
         },

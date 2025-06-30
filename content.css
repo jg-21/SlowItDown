@@ -1,0 +1,56 @@
+#mindfulOverlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 999999;
+  font-family: system-ui, sans-serif;
+  animation: fadeIn 0.3s ease-out;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+#mindfulOverlay p {
+  font-size: 2.4rem;
+  max-width: 700px;
+  margin-bottom: 32px;
+  line-height: 1.6;
+  color: #fff;
+  text-align: center;
+}
+
+#mindfulOverlay button {
+  padding: 16px 36px;
+  font-size: 1.4rem;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  margin: 12px;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+#continueBtn { background-color: #4caf50; color: white; }
+#closeTabBtn { background-color: #f44336; color: white; }
+#settingsBtn { background-color: #607d8b; color: white; }
+#keepWatchingBtn { background-color: #2196f3; color: white; }
+#takeBreakBtn { background-color: #ff9800; color: white; }
+
+#mindfulOverlay button:hover {
+  opacity: 0.95;
+  transform: scale(1.03);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  #mindfulOverlay button {
+    width: 90%;
+  }
+}
