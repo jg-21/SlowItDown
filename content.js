@@ -116,9 +116,4 @@
       );
     }
   });
-
-  // Stop timer when user leaves the tab or navigates away
-  // window.addEventListener("beforeunload", () => {
-  //   chrome.runtime.sendMessage({ type: "stopTimer" });
-  // });
 })();
