@@ -23,13 +23,14 @@
     const container = document.createElement("div");
     container.innerHTML = `<p>${message}</p>`;
 
-    buttons.forEach(({ id, text, onClick }) => {
+    buttons.forEach(({ id, text, tooltip, onClick }) => {
       const btn = document.createElement("button");
       btn.id = id;
       btn.style.margin = "10px";
       btn.style.padding = "10px 20px";
       btn.style.fontSize = "1rem";
       btn.textContent = text;
+      if (tooltip) btn.title = tooltip; // Add tooltip here
       btn.onclick = () => onClick(overlay);
       container.appendChild(btn);
     });
@@ -47,6 +48,7 @@
       {
         id: "continueBtn",
         text: "Continue",
+        tooltip: "Keep watching this page and start the mindfulness timer",
         onClick: (overlay) => {
           overlay.remove();
           // Start timer after user continues
@@ -56,6 +58,7 @@
       {
         id: "closeTabBtn",
         text: "Never Mind",
+        tooltip: "Leave this page and go back to working",
         onClick: () => {
           chrome.storage.sync.get(["redirectUrl"], (data) => {
             const url = data.redirectUrl || "https://asoftmurmur.com/";
@@ -66,6 +69,7 @@
       {
         id: "settingsBtn",
         text: "Settings",
+        tooltip: "Customize redirect page and reminder timer",
         onClick: () => {
           chrome.runtime.sendMessage({ type: "openSettings" });
         },
