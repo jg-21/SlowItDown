@@ -3,15 +3,25 @@
   <head>
     <title>Mindful Defaults Settings</title>
     <style>
-      body { font-family: sans-serif; padding: 20px; }
-      input { width: 100%; padding: 8px; }
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+      }
     </style>
   </head>
+  <h2>Nudge delay (in minutes)</h2>
+  <input id="nudgeDelay" type="number" min="1" value="10" />
+  <p id="delayStatus"></p>
   <body>
     <h2>Set your redirection page</h2>
     <input id="redirectUrl" type="text" placeholder="https://asoftmurmur.com" />
     <p id="status"></p>
 
-    <script src="options.js"></script> <!-- ✅ External script, allowed -->
+    <script src="options.js"></script>
+    <!-- ✅ External script, allowed -->
   </body>
 </html>
