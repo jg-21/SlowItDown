@@ -57,7 +57,17 @@
         id: "closeTabBtn",
         text: "Never Mind",
         onClick: () => {
-          window.location.href = "https://asoftmurmur.com//";
+          chrome.storage.sync.get(["redirectUrl"], (data) => {
+            const url = data.redirectUrl || "https://asoftmurmur.com/";
+            window.location.href = url;
+          });
+        },
+      },
+      {
+        id: "settingsBtn",
+        text: "Settings",
+        onClick: () => {
+          chrome.runtime.sendMessage({ type: "openSettings" });
         },
       },
     ]
@@ -85,7 +95,17 @@
             id: "takeBreakBtn",
             text: "Take a Break",
             onClick: () => {
-              window.location.href = "https://asoftmurmur.com/";
+              chrome.storage.sync.get(["redirectUrl"], (data) => {
+                const url = data.redirectUrl || "https://asoftmurmur.com/";
+                window.location.href = url;
+              });
+            },
+          },
+          {
+            id: "settingsBtn",
+            text: "Settings",
+            onClick: () => {
+              chrome.runtime.sendMessage({ type: "openSettings" });
             },
           },
         ]

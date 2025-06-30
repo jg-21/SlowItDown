@@ -1,6 +1,12 @@
 let timerId = null;
 const NUDGE_DELAY = 50000; // 10 minutes in ms
 
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === "install") {
+    chrome.runtime.openOptionsPage();
+  }
+});
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.type === "startTimer") {
     // Clear previous timer if any
@@ -20,5 +26,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       timerId = null;
     }
     sendResponse({ status: "timer stopped" });
+  }
+  if (message.type === "openSettings") {
+    chrome.runtime.openOptionsPage();
+    sendResponse({ status: "options opened" });
   }
 });
