@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Mindful Defaults",
+  "version": "1.0",
+  "description": "Pause before you scroll mindlessly.",
+  "permissions": ["tabs", "scripting"],
+  "host_permissions": ["*://www.youtube.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "128": "icon.png"
+  }
+}
