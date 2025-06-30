@@ -1,61 +1,40 @@
-# SlowItDown
+# 🧠 Mindful Defaults – Chrome Extension
 
-Mindful Defaults Chrome Extension
-A lightweight Chrome extension that helps users be more intentional about their browsing habits by prompting mindfulness overlays and reminders on specified websites like YouTube.
+**Mindful Defaults** is a lightweight Chrome extension that helps you become more intentional with your online habits. It gently nudges you to reflect before diving into sites like YouTube — helping you reclaim your time and attention.
 
-Features
-Shows an initial prompt asking if you’re browsing with intention or out of habit
+---
 
-Sends periodic reminder nudges after a customizable timer to encourage mindful breaks
+## ✨ Features
 
-Allows users to customize their preferred break redirect page
+- 🧘 Initial **mindfulness prompt** when visiting a distracting site
+- ⏱️ Customizable **reminder timer** (e.g., every 10 minutes)
+- 🔁 Smart **overlays** that remind you to take breaks
+- 🌐 **Redirect to a calming or productive site** when clicking “Never Mind”
+- ⚙️ A simple **settings page** to configure:
+  - Break redirect URL
+  - Timer duration
+- 📝 **Tooltips** on all buttons for better clarity
 
-Lets users customize the reminder timer duration
+---
 
-Clean overlay UI with actionable buttons: Continue, Never Mind (redirect), Settings
+## 📦 Installation
 
-Settings page to save preferences (redirect URL and timer duration)
+1. Clone or download this repository.
+2. Open Chrome and visit: `chrome://extensions`
+3. Enable **Developer mode** (top-right toggle).
+4. Click **Load unpacked** and select the project folder.
+5. Open YouTube (or another target site) to see it in action.
+6. Use the **Settings** button on the overlay to customize behavior.
 
-Supports multiple reminders and timer resets after user interactions
+---
 
-How It Works
-When the user visits a target site (e.g. YouTube), the extension injects a content script that shows an initial mindfulness prompt overlay.
+## 🗂 Project Structure
 
-If the user continues, a timer starts running in the background service worker.
-
-When the timer expires, the extension sends a message to the content script to show a reminder overlay.
-
-The user can choose to keep watching, take a break (redirect to the saved URL), or open settings.
-
-The extension listens for user interactions to start/stop timers and update settings accordingly.
-
-Installation & Usage
-Clone or download this repository.
-
-Open Chrome and go to chrome://extensions.
-
-Enable Developer mode (top right).
-
-Click Load unpacked and select the project folder.
-
-The extension will install and prompt you to configure settings on first install.
-
-Visit YouTube or your target site and test the mindfulness overlays.
-
-Project Structure
-manifest.json: Extension manifest with permissions and scripts.
-
-background.js: Background service worker that manages timers and messaging.
-
-content.js: Content script injected into target pages to show overlays and handle user interaction.
-
-options.html + embedded script: Settings page UI for customizing redirect URL and reminder timer.
-
-styles.css (optional): Styles for overlays and options page (can be embedded or separate).
-
-Customization
-Update manifest.json to change which sites the content script runs on.
-
-Default redirect URL is https://asoftmurmur.com/ but can be changed in Settings.
-
-Default reminder timer is 10 minutes but can be customized via Settings.
+```plaintext
+📁 mindful-defaults-extension/
+├── manifest.json           # Extension metadata & permissions
+├── background.js           # Background timer + message handler
+├── content.js              # Injected script to show overlays
+├── options.html            # Settings UI for redirect URL + timer
+└── (optional) icons/, styles.css, etc.
+```
