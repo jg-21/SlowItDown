@@ -138,7 +138,10 @@
         return;
 
       createOverlay(
-        "You’ve been on YouTube for 10 minutes. Time for a mindful break?",
+        `<div style="text-align: center;">
+          <img src="penguin.gif" alt="Cute Cat GIF" style="border-radius: 50%; margin-bottom: 20px; width: 200px; height: 200px;">
+          <p>You’ve been on YouTube for 10 minutes. Time for a mindful break?</p>
+        </div>`,
         [
           {
             id: "keepWatchingBtn",
