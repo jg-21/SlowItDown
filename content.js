@@ -139,7 +139,9 @@
 
       createOverlay(
         `<div style="text-align: center;">
-          <img src="penguin.gif" alt="Cute Cat GIF" style="border-radius: 50%; margin-bottom: 20px; width: 200px; height: 200px;">
+          <img src="${chrome.runtime.getURL(
+            "penguin.gif"
+          )}" alt="Cute Penguin GIF" style="border-radius: 50%; margin-bottom: 20px; width: 250px; height: 250x;">
           <p>You’ve been on YouTube for 10 minutes. Time for a mindful break?</p>
         </div>`,
         [
