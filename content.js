@@ -141,7 +141,7 @@
         `<div style="text-align: center;">
           <img src="${chrome.runtime.getURL(
             "penguin.gif"
-          )}" alt="Cute Penguin GIF" style="border-radius: 50%; margin-bottom: 20px; width: 250px; height: 250x;">
+          )}" alt="Cute Penguin GIF" style=margin-bottom: 20px; width: 200px; height: 200x;">
           <p>You’ve been on YouTube for 10 minutes. Time for a mindful break?</p>
         </div>`,
         [
