@@ -37,7 +37,7 @@
     const container = document.createElement("div");
     container.innerHTML = `<p>${message}</p>`;
 
-    buttons.forEach(({ id, text, tooltip, onClick }) => {
+    buttons.forEach(({ id, text, tooltip, onClick, style }) => {
       const btn = document.createElement("button");
       btn.id = id;
       btn.textContent = text;
@@ -88,6 +88,15 @@
           },
         },
         {
+          id: "disableNudgeBtn",
+          text: "Disable Reminder",
+          tooltip: "Turn off reminder for this YouTube session",
+          onClick: (overlay) => {
+            overlay.remove();
+            window.nudgesDisabled = true; // Set a flag to disable nudges
+          },
+        },
+        {
           id: "settingsBtn",
           text: "Adjust Settings",
           tooltip: "Change timer delay or redirect destination",
@@ -95,8 +104,8 @@
             position: "absolute",
             bottom: "20px",
             right: "20px",
-            padding: "8px 12px",
-            fontSize: "0.9rem",
+            padding: "12px 16px", // Increased padding for a larger button
+            fontSize: "1rem", // Slightly larger font size
             backgroundColor: "#444",
             color: "#fff",
             border: "none",
