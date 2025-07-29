@@ -2,6 +2,20 @@
   if (window.hasRun) return;
   window.hasRun = true;
 
+  // 🌀 Watch for SPA URL changes
+  function onUrlChange(callback) {
+    let currentUrl = location.href;
+
+    const observer = new MutationObserver(() => {
+      if (location.href !== currentUrl) {
+        currentUrl = location.href;
+        callback(currentUrl);
+      }
+    });
+
+    observer.observe(document, { subtree: true, childList: true });
+  }
+
   const createOverlay = (message, buttons) => {
     const overlay = document.createElement("div");
     overlay.id = "mindfulOverlay";
@@ -29,6 +43,14 @@
       btn.textContent = text;
       if (tooltip) btn.title = tooltip; // Add tooltip here
       btn.onclick = () => onClick(overlay);
+
+      // Apply custom styles if provided
+      if (style) {
+        Object.keys(style).forEach((key) => {
+          btn.style[key] = style[key];
+        });
+      }
+
       container.appendChild(btn);
     });
 
@@ -38,46 +60,73 @@
     return overlay;
   };
 
-  // Initial mindful prompt
-  const initialOverlay = createOverlay(
-    "Hey there 👋<br>Are you here with intention or just out of habit?",
-    [
-      {
-        id: "continueBtn",
-        text: "Yes, Continue",
-        tooltip: "Stay on this page and start the mindful timer",
-        onClick: (overlay) => {
-          overlay.remove();
-          chrome.runtime.sendMessage({ type: "startTimer" });
+  // 🪄 Reusable prompt
+  function showMindfulPrompt() {
+    if (document.getElementById("mindfulOverlay")) return;
+
+    createOverlay(
+      "Hey there 👋<br>Are you here with intention or just out of habit?",
+      [
+        {
+          id: "continueBtn",
+          text: "Yes, Continue",
+          tooltip: "Stay on this page and start the mindful timer",
+          onClick: (overlay) => {
+            overlay.remove();
+            chrome.runtime.sendMessage({ type: "startTimer" });
+          },
         },
-      },
-      {
-        id: "closeTabBtn",
-        text: "No, Take Me Back",
-        tooltip: "Redirect to your calming site instead",
-        onClick: () => {
-          chrome.storage.sync.get(["redirectUrl"], (data) => {
-            const url = data.redirectUrl || "https://asoftmurmur.com/";
-            window.location.href = url;
-          });
+        {
+          id: "closeTabBtn",
+          text: "No, Take Me Back",
+          tooltip: "Redirect to your calming site instead",
+          onClick: () => {
+            chrome.storage.sync.get(["redirectUrl"], (data) => {
+              const url = data.redirectUrl || "https://asoftmurmur.com/";
+              window.location.href = url;
+            });
+          },
         },
-      },
-      {
-        id: "settingsBtn",
-        text: "Adjust Settings",
-        tooltip: "Change timer delay or redirect destination",
-        onClick: () => {
-          chrome.runtime.sendMessage({ type: "openSettings" });
+        {
+          id: "settingsBtn",
+          text: "Adjust Settings",
+          tooltip: "Change timer delay or redirect destination",
+          style: {
+            position: "absolute",
+            bottom: "20px",
+            right: "20px",
+            padding: "8px 12px",
+            fontSize: "0.9rem",
+            backgroundColor: "#444",
+            color: "#fff",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          },
+          onClick: () => {
+            chrome.runtime.sendMessage({ type: "openSettings" });
+          },
         },
-      },
-    ]
-  );
+      ]
+    );
+  }
+
+  // 🛎 Initial load
+  showMindfulPrompt();
+
+  // ♻️ SPA support
+  onUrlChange(() => {
+    const existing = document.getElementById("mindfulOverlay");
+    if (existing) existing.remove();
+    showMindfulPrompt();
+  });
 
   // Listen for messages from background to show nudge
   chrome.runtime.onMessage.addListener((message) => {
     if (message.type === "showNudge") {
-      // If overlay is already open, do nothing
-      if (document.getElementById("mindfulOverlay")) return;
+      // If nudges are disabled or overlay is already open, do nothing
+      if (window.nudgesDisabled || document.getElementById("mindfulOverlay"))
+        return;
 
       createOverlay(
         "You’ve been on YouTube for 10 minutes. Time for a mindful break?",
@@ -106,6 +155,15 @@
             text: "Settings",
             onClick: () => {
               chrome.runtime.sendMessage({ type: "openSettings" });
+            },
+          },
+          {
+            id: "disableNudgeBtn",
+            text: "Disable Reminder",
+            tooltip: "Turn off reminder for this YouTube session",
+            onClick: (overlay) => {
+              overlay.remove();
+              window.nudgesDisabled = true; // Set a flag to disable nudges
             },
           },
         ]
