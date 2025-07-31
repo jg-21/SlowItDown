@@ -27,7 +27,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         chrome.tabs.query({ url: "*://www.youtube.com/*" }, (tabs) => {
           if (tabs.length > 0) {
             console.log("📨 Sending showNudge to tab", tabs[0].id);
-            chrome.tabs.sendMessage(tabs[0].id, { type: "showNudge" });
+            chrome.tabs.sendMessage(tabs[0].id, { type: "showNudge" }, (response) => {
+              if (chrome.runtime.lastError) {
+                console.error("❌ Error sending message:", chrome.runtime.lastError.message);
+              } else {
+                console.log("✅ Message sent successfully:", response);
+              }
+            });
           } else {
             console.warn("❌ No matching tab found");
           }
